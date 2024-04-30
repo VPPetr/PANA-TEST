@@ -4,10 +4,10 @@ locals {
       name     = "euw-rg-vnet-085-files-pieu-01"
       location = local.primary_location
     }
-    # rgstorage01 = {
-    #   name     = "euw-rg-st-085-files-pieu-01"
-    #   location = local.primary_location
-    # }
+    rgstorage01 = {
+      name     = "euw-rg-st-085-files-pieu-01"
+      location = local.primary_location
+    }
   }
 }
 
