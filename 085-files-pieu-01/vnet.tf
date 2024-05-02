@@ -89,7 +89,12 @@ locals {
   vnets_085-snetname = {
     for k, v in module.vnets_085 : k => v.subnet_names
   }
- 
+#   management-snetid = tomap({
+#       for snet in data.azurerm_subnet.managementsubnets: snet.name => snet.id
+#   })
+#  local_management-snetid ={
+#   value = merge(local.vnets_085-snetid, local.management-snetid)
+#  }
 }
  output "subnet_ids" {
   value = local.vnets_085-snetid
@@ -104,26 +109,31 @@ output "vnet_id" {
     for k, v in module.vnets_085 : k => v.id
   }
 }
-
-# resource "azurerm_virtual_network_peering" "con-to-pieu" {
-#   provider = azurerm.azconnectivity
-#   name     = "euw-pvnet-003-connectivity-01-to-085-files-pieu-01"
-#   #local.rgs.rgvnet01
-#   resource_group_name          = data.azurerm_virtual_network.convnet.resource_group_name
-#   virtual_network_name         = data.azurerm_virtual_network.convnet.name
-#   remote_virtual_network_id    = module.vnets_085["vnet_085-1"].id
-#   allow_virtual_network_access = true
-#   allow_forwarded_traffic      = true
-#   # use_remote_gateways = true
+# output "managementsubnets_subnets_ids" {
+#   value = local.management-snetid
 # }
-# resource "azurerm_virtual_network_peering" "pieu-to-con" {
 
-#   name     = "085-files-pieu-01-to-euw-pvnet-003-connectivity-01"
-#   #local.rgs.rgvnet01
-#   resource_group_name          = azurerm_resource_group.rgs["rgvnet"].name
-#   virtual_network_name         = local.vnets_085["vnet_085-1"].name
-#   remote_virtual_network_id    = data.azurerm_virtual_network.convnet.id
-#   allow_virtual_network_access = true
-#   allow_forwarded_traffic      = true
-#   #use_remote_gateways = true
-# }
+resource "azurerm_virtual_network_peering" "con-to-pieu" {
+  provider = azurerm.azconnectivity
+  name     = "euw-pvnet-003-connectivity-01-to-085-files-pieu-01"
+  #local.rgs.rgvnet01
+  resource_group_name          = data.azurerm_virtual_network.convnet.resource_group_name
+  virtual_network_name         = data.azurerm_virtual_network.convnet.name
+  remote_virtual_network_id    = module.vnets_085["vnet_085-1"].id
+  allow_virtual_network_access = true
+  allow_forwarded_traffic      = true
+  use_remote_gateways = false
+  allow_gateway_transit = true
+}
+resource "azurerm_virtual_network_peering" "pieu-to-con" {
+
+  name     = "085-files-pieu-01-to-euw-pvnet-003-connectivity-01"
+  #local.rgs.rgvnet01
+  resource_group_name          = azurerm_resource_group.rgs["rgvnet"].name
+  virtual_network_name         = local.vnets_085["vnet_085-1"].name
+  remote_virtual_network_id    = data.azurerm_virtual_network.convnet.id
+  allow_virtual_network_access = true
+  allow_forwarded_traffic      = true
+    use_remote_gateways = true
+    allow_gateway_transit =false
+}
