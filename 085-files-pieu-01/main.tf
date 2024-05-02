@@ -23,12 +23,12 @@ provider "azurerm" {
 
 provider "azurerm" {
   features {}
-  alias = "azconnectivity"
+  alias           = "azconnectivity"
   subscription_id = "c24b3069-0534-4556-b91a-679c9f8e68ff"
 }
 provider "azurerm" {
   features {}
-  alias = "management"
+  alias           = "management"
   subscription_id = "c60ec3ef-a135-4868-b9e7-40801ee2765e"
 }
 
@@ -44,14 +44,14 @@ data "azurerm_virtual_network" "managementvnet" {
   provider            = azurerm.management
 }
 data "azurerm_subnet" "managementsubnets" {
-    name                 = data.azurerm_virtual_network.managementvnet.subnets[count.index]
-    virtual_network_name = data.azurerm_virtual_network.managementvnet.name
-    resource_group_name  = data.azurerm_virtual_network.managementvnet.resource_group_name
-    count                = length(data.azurerm_virtual_network.managementvnet.subnets)
-    provider            = azurerm.management
+  name                 = data.azurerm_virtual_network.managementvnet.subnets[count.index]
+  virtual_network_name = data.azurerm_virtual_network.managementvnet.name
+  resource_group_name  = data.azurerm_virtual_network.managementvnet.resource_group_name
+  count                = length(data.azurerm_virtual_network.managementvnet.subnets)
+  provider             = azurerm.management
 }
 data "azurerm_private_dns_zone" "filepdns" {
   name                = "privatelink.file.core.windows.net"
   resource_group_name = "euw-rg-pdns-003-connectivity-01"
-   provider            = azurerm.azconnectivity
+  provider            = azurerm.azconnectivity
 }

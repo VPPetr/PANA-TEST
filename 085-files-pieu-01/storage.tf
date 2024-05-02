@@ -7,10 +7,10 @@ locals {
   storage_accounts = {
     ### Temp Storage for Training Migrations
     "tpieufs" = {
-      name     = "euwstpieufs01"
-      rg       = azurerm_resource_group.rgs["rgstorage01"].name
-      location = local.primary_location
-      subnet_ids = ["/subscriptions/0098d6b7-2012-4327-9b00-5515e478d5e5/resourceGroups/euw-rg-vnet-085-files-pieu-01/providers/Microsoft.Network/virtualNetworks/euw-vnet-085-files-pieu-01/subnets/euw-snet-085-files-pieu-01", "/subscriptions/c60ec3ef-a135-4868-b9e7-40801ee2765e/resourceGroups/euw-rg-vnet-001-management-01/providers/Microsoft.Network/virtualNetworks/euw-vnet-001-management-01/subnets/euw-snet-001-management-01","/subscriptions/c60ec3ef-a135-4868-b9e7-40801ee2765e/resourceGroups/euw-rg-vnet-001-management-01/providers/Microsoft.Network/virtualNetworks/euw-vnet-001-management-01/subnets/euw-snet-001-management-02" ]
+      name       = "euwstpieufs01"
+      rg         = azurerm_resource_group.rgs["rgstorage01"].name
+      location   = local.primary_location
+      subnet_ids = ["/subscriptions/0098d6b7-2012-4327-9b00-5515e478d5e5/resourceGroups/euw-rg-vnet-085-files-pieu-01/providers/Microsoft.Network/virtualNetworks/euw-vnet-085-files-pieu-01/subnets/euw-snet-085-files-pieu-01", "/subscriptions/c60ec3ef-a135-4868-b9e7-40801ee2765e/resourceGroups/euw-rg-vnet-001-management-01/providers/Microsoft.Network/virtualNetworks/euw-vnet-001-management-01/subnets/euw-snet-001-management-01", "/subscriptions/c60ec3ef-a135-4868-b9e7-40801ee2765e/resourceGroups/euw-rg-vnet-001-management-01/providers/Microsoft.Network/virtualNetworks/euw-vnet-001-management-01/subnets/euw-snet-001-management-02"]
 
       shares = {
         "pfcoe" = {
@@ -59,9 +59,9 @@ resource "azurerm_private_endpoint" "stpieufs01" {
 
 resource "azurerm_private_dns_a_record" "st_fqdn" {
   provider            = azurerm.azconnectivity
-  name = "euwstpieufs01"
-  zone_name = data.azurerm_private_dns_zone.filepdns.name
+  name                = "euwstpieufs01"
+  zone_name           = data.azurerm_private_dns_zone.filepdns.name
   resource_group_name = data.azurerm_private_dns_zone.filepdns.resource_group_name
-  ttl = 10
-  records = [azurerm_private_endpoint.stpieufs01.ip_configuration[0].private_ip_address]
+  ttl                 = 10
+  records             = [azurerm_private_endpoint.stpieufs01.ip_configuration[0].private_ip_address]
 }
