@@ -80,6 +80,6 @@ resource "azurerm_virtual_machine" "main" {
   }
 
   tags = {
-    environment = "staging"
+    #environment = "staging"
   }
 }
