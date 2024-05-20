@@ -30,11 +30,11 @@ locals {
               next_hop_type = "VirtualNetworkGateway"
             }
             "002defaultIdentity" = {
-              prefix        = "10.181.0.0/24"
+              prefix        = "10.111.131.128/25"
               next_hop_type = "VirtualNetworkGateway"
             }
             "003defaultRouteToFirewall" = {
-              prefix        = "10.181.57.128/25"
+              prefix        = "0.0.0.0/0"
               next_hop_type = "VirtualAppliance"
               next_hop_ip   = "10.111.130.196"
             }

@@ -4,11 +4,11 @@ locals {
       name                = "euw-vnet-087-files-pit-01"
       location            = local.primary_location
       resource_group_name = azurerm_resource_group.rgs["rgvnet"].name
-      # address_space       = ["10.111.148.144/28"]
-      # dns_servers         = ["10.111.131.135", "10.111.131.134", "10.111.131.136"]
+      address_space       = ["10.111.148.176/28"]
+      dns_servers         = ["10.111.131.135", "10.111.131.134", "10.111.131.136"]
       subnets = {
         "euw-snet-087-files-pit-01" = {
-          # prefix            = "10.111.148.144/28"
+          prefix            = "10.111.148.176/28"
           service_endpoints = ["Microsoft.Storage", "Microsoft.KeyVault"]
           nsg = {
             name  = "euw-nsg-087-files-pit-01"
@@ -25,11 +25,11 @@ locals {
               next_hop_type = "VirtualNetworkGateway"
             }
             "002defaultIdentity" = {
-              prefix        = "10.181.0.0/24"
+              prefix        = "10.111.131.128/25"
               next_hop_type = "VirtualNetworkGateway"
             }
             "003defaultRouteToFirewall" = {
-              prefix        = "10.181.57.128/25"
+              prefix        = "0.0.0.0/0"
               next_hop_type = "VirtualAppliance"
               next_hop_ip   = "10.111.130.196"
             }

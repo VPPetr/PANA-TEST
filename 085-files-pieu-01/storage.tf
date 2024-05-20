@@ -17,6 +17,14 @@ locals {
           quota = 2048
         }
       }
+      ad_auth = {
+        domain_guid         = "f6421d14-5ec3-4c39-a813-fa450fbca085"
+        domain_name         = "eu.gds.panasonic.com"
+        domain_sid          = "S-1-5-21-2739511847-3804836064-3058629999"
+        forest_name         = "gds.panasonic.com"
+        netbios_domain_name = "EU"
+        storage_sid         = "S-1-5-21-2739511847-3804836064-3058629999-4765473"
+      }
     }
   }
 }
